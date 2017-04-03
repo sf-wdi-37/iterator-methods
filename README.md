@@ -10,16 +10,16 @@ Location: SF
 <!-- framing the "why" in big-picture/real world examples -->
 *This workshop is important because:*
 
-Using callback functions is an effective way to write declarative, functional JavaScript. JavaScript was built to deal with asynchronous events; callbacks help appropriately time and coordinate our program.
+Using callback functions is an effective way to write declarative, functional JavaScript. JavaScript was built to deal with asynchronous events; callbacks help time and coordinate our program by letting us determine what happens *after* some other code finishes.
 
 ### What are the objectives?
 <!-- specific/measurable goal for students to achieve -->
 *After this workshop, developers will be able to:*
 
-- Pass a function as a callback to another function
-- Use iterator methods with callbacks to build more declarative loop structures
-- Recognize the best iterator method for a particular use case
-- Build iterator methods from scratch
+- Pass a function as a callback to another function.
+- Use iterator methods with callbacks to build more declarative loop structures.
+<!-- - Recognize the best iterator method for a particular use case. -->
+- Build iterator methods from scratch.
 
 
 ### Where should we be now?
@@ -28,7 +28,7 @@ Using callback functions is an effective way to write declarative, functional Ja
 
 - Write and call functions in JavaScript
 - Explain what a higher order function is
-- Use a `for` loop
+- Use a `for` loop with a counter to iterate through an array
 
 
 
@@ -110,7 +110,7 @@ masterMathFunction(2,3,multiplyMe);
 
 3. What is another possible callback function?
 
-Callbacks allow us to queue up the execution of a function until after some other code completes. They allow for asynchronous behavior, even though JavaScript is a single-threaded language. They also let us customize behaviors inside libraries. 
+Callbacks allow us to queue up the execution of a function until after some other code completes. They allow for asynchronous behavior, even though JavaScript is a single-threaded language. They also let us customize behaviors inside libraries.
 
 <!--In order to accomplish this, callbacks don't just use the regular call stack. They also involve a structure called a callback queue (or line).  When the callback is ready to be run, it's added to the queue. Callbacks waiting in the queue are run whenever the stack is empty.-->
 
@@ -120,7 +120,7 @@ See this awesome video of [a talk by Philip Roberts](https://www.youtube.com/wat
 
 Let's walk through another example of code that uses callbacks:
 
-```javascript
+```js
 var element = document.querySelector("body");
 var counter = 0;
 element.addEventListener("click", countClicks);
@@ -131,7 +131,7 @@ function countClicks(event){
 }
 ```
 
-Let's run this in the console.
+Run this example in the console.
 
 
 #### Anonymous Functions: Review
@@ -172,7 +172,7 @@ arr.sort();
 // returns [1, 125, 2, 500]
 ```
 
-Checking the [documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort), you should notice there is an optional `compareFunction` parameter that can change the sort order rules. 
+Checking the [documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort), you should notice there is an optional `compareFunction` parameter that can change the sort order rules.
 
 Use JavaScript's `sort` function to sort the following objects by price, from lowest to highest:
 
@@ -186,32 +186,31 @@ var items = [
 ];
 ```
 
-<details>
-  <summary>Hint: how to start</summary>
-  You'll need to write a custom `compareFunction` and pass it into the `sort` method. Follow the structure of the custom `compareFunction` from the documentation.
-</details>
+Hint: getting started
+>  You'll need to write a custom `compareFunction` and pass it into the `sort` method. Follow the structure of the custom `compareFunction` from the documentation.
+
 
 <details>
   <summary>Answer: the compare function</summary>
-  ```js
-  function compareByPrice(item1, item2){
-    if (item1.price < item2.price) {
-      return -1;
-    }
-    if (item1.price > item2.price) {
-      return 1;
-    }
-    // items must have equal price
-    return 0;
-  }
-  ```
+
+      function compareByPrice(item1, item2){
+        if (item1.price < item2.price) {
+          return -1;
+        }
+        if (item1.price > item2.price) {
+          return 1;
+        }
+        // items must have equal price
+        return 0;
+      }
+
 </details>
 
 <details>
   <summary>Answer: calling `sort` with customized function</summary>
-  ```js
-  items.sort(compareByPrice);
-  ```
+
+      items.sort(compareByPrice);
+
 </details>
 
 
@@ -222,14 +221,24 @@ var items = [
 
 ![looping](http://i.giphy.com/GB3XCL0cnIUxi.gif)
 
-```javascript
+```js
 var potatoes = ["Yukon Gold", "Russet", "Yellow Finn", "Kestrel"];
 for(var i=0; i < potatoes.length; i++){
-    console.log(potatoes[i] + "!")
+    console.log(potatoes[i] + "!");
 }
 ```
 
-**Iterator methods** create more declarative abstractions for common uses of loops.
+**ES6** introduced more ways to loop through arrays. One very commonly used one is `for ... of`:
+
+```js
+const potatoes = ["Yukon Gold", "Russet", "Yellow Finn", "Kestrel"]
+for(let potato of potatoes){
+    console.log(`${potato}!`)
+}
+```
+
+
+**Iterator methods** create other declarative abstractions for common uses of loops.
 
 ```js
 var potatoes = ["Yukon Gold", "Russet", "Yellow Finn", "Kestrel"];
@@ -238,24 +247,47 @@ potatoes.forEach(function(element){
 });
 ```
 
-We can combine our knowledge of **callbacks** & **iteration** to write better, more *declarative* code.
+We can combine our knowledge of **callbacks** & **iteration** to write more *declarative* code.
 
-*We can also illustrate a lot of these with the physical example of a pillbox(array) with items at each index(jelly beans!).*
+*We can also illustrate a lot of these with the physical example or diagram.*
 
 Be thinking about how we could extend this metaphor with each method we discuss here.
+
+### ES6 `Map`s and `Set`s
+
+It used to be fairly easy to iterate through arrays in JavaScript and fairly hard to iterate through Objects. Here's how you would loop through all the key-value pairs in an object in ES5:
+
+```js
+for (var key in obj){
+  if (obj.hasOwnProperty(key)){
+    // now you can do whatever you're interested in
+    console.log(key, ': ', obj[key]);
+  }
+}
+```
+
+Note that the key-value pairs weren't guaranteed to show up in any particular order, either.
+
+ES6 introduced a few new kinds of **iterable** objects to join arrays as easy loopers.  
+
+`Map`s store key-value pairs _in the order they were inserted_ and allow devs to loop through the entries with `forEach`.  
+
+`Set`s store _unique_ items _in the order they were inserted_ and allow devs to loop through the entries with `forEach`. 
+
+
 
 ### [`forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ForEach)
 
 
 The `forEach()` method performs whatever callback function you pass into it on each element.
 
-```javascript
-var fruits = ["Apple", "Banana", "Cherry", "Durian", "Elderberry",
+```js
+let fruits = ["Apple", "Banana", "Cherry", "Durian", "Elderberry",
 "Fig", "Guava", "Huckleberry", "Ice plant", "Jackfruit"];
 
-fruits.forEach(function (value, index) {
-    console.log(index + ". " + value);
-});
+fruits.forEach((value, index) => {
+    console.log(`${index}. ${value}`)
+})
 
 // 0. Apple
 // 1. Banana
@@ -267,7 +299,7 @@ fruits.forEach(function (value, index) {
 // 7. Huckleberry
 // 8. Ice plant
 // 9. Jackfruit
-//=> ["Apple", "Banana", "Cherry", "Durian", "Elderberry",
+// returns ["Apple", "Banana", "Cherry", "Durian", "Elderberry",
 //    "Fig", "Guava", "Huckleberry", "Ice plant", "Jackfruit"];
 ```
 
@@ -286,9 +318,9 @@ var doubles = numbers.map(function doubler(num) {
 // doubles is now [2, 8, 18]. numbers is still [1, 4, 9]
 ```
 
-####Example: Pluralize all the fruit names
+####Example: Create array of pluralized fruit names
 
-```javascript
+```js
 pluralized_fruits = fruits.map(function pluralize(element) {
 
   // if word ends in 'y', remove 'y' and add 'ies' to the end
@@ -301,45 +333,33 @@ pluralized_fruits = fruits.map(function pluralize(element) {
 });
 
 fruits // ORIGINAL ARRAY IS UNCHANGED!
-//=> ["Apple", "Banana", "Cherry", "Durian", "Elderberry",
+// returns ["Apple", "Banana", "Cherry", "Durian", "Elderberry",
 //    "Fig", "Guava", "Huckleberry", "Ice plant", "Jackfruit"];
 
 pluralized_fruits // MAP OUTPUT
-//=> [ "Apples", "Bananas", "Cherries", "Durians", "Elderberries",
+// returns [ "Apples", "Bananas", "Cherries", "Durians", "Elderberries",
 //    "Figs", "Guavas", "Huckleberries", "Ice plants", "Jackfruits"  ]
 ```
 
 ####Example: Square each number
 
-```javascript
+```js
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 numbers.map(function square(element) {
   return Math.pow(element, 2);
 });
-//=> [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+// returns [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 
 #### Check for Understanding: Etsy Merchant
 
-<details>
-<summary>
 Elaine the Etsy Merchant thinks her prices are scaring off customers. Subtracting one penny from every price might help!  Use `map` to subtract 1 cent from each of the prices on this receipt's list:
 
-```javascript
+```js
 var prices = [3.00, 4.00, 10.00, 2.25, 3.01];
 // create a new array with the reduced prices...
 ```
-</summary>
-
-```javascript
-var prices = [3.00,4.00,10.00,2.25,3.01];
-var reducedPrices = prices.map(function(price) {
-  return price - 0.01;
-});
-```
-
-</details>
 
 
 ### [`filter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Filter)
@@ -348,7 +368,7 @@ With the `filter()`, method you can create a new array filled with elements that
 
 #### Example: Return a list of fruits that start with vowels
 
-```javascript
+```js
 var fruits = ["Apple", "Banana", "Cherry", "Elderberry",
 "Fig", "Guava", "Ice plant", "Jackfruit"];
 var vowels = ["A", "E", "I", "O", "U"];
@@ -364,7 +384,7 @@ console.log(vowelFruits);
 
 Or alternatively:
 
-```javascript
+```js
 var vowels = ["A", "E", "I", "O", "U"];
 
 var vowelFruits = fruits.filter(function vowelFruit(fruit) {
@@ -375,9 +395,10 @@ console.log(vowelFruits);
 
 ```
 
+
 #### Example: Find all the even numbers that are greater than 5
 
-```javascript
+```js
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 even = numbers.filter(function filterEvens(num) {
@@ -385,42 +406,31 @@ even = numbers.filter(function filterEvens(num) {
   var greaterThanFive = num > 5;
   return isEven && greaterThanFive;
 });
-//=> [6, 8, 10]
+// returns [6, 8, 10]
 ```
 
 #### Check for Understanding: Birthdays
 
-<details>
-<summary>
-Is there an interesting trend in birthdays?  Do people tend to be born more on even-numbered dates or odd-numbered dates? If so, what's the ratio? In class, let's take a quick poll of the days of the month people were born on. This is a great chance to do some serious science!
+Is there an interesting trend in birthdays?  Do people tend to be born more on even-numbered dates or odd-numbered dates? If so, what's the ratio? In class, let's take a quick poll of the days of the month people were born on. This is a great chance to do some science!
 
-```javascript
+```js
 var exampleBdays = [1, 1, 2, 3, 3, 3, 5, 5, 6, 6, 8, 8, 10, 10, 12, 12, 13, 13, 15, 17, 17, 18, 20, 20, 26, 31];
-// gather an array of all the even birthdays...
+// create an array of all the even birthdays...
 ```
-</summary>
-
-```javascript
-var exampleBdays = [1, 1, 2, 3, 3, 3, 5, 5, 6, 6, 8, 8, 10, 10, 12, 12, 13, 13, 15, 17, 17, 18, 20, 20, 26, 31];
-var birthDateEvens = exampleBdays.filter(function(birthday) {
-  return birthday % 2 === 0 ? birthday : false;
-});
-```
-</details>
 
 ### [`reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 The `reduce()` method is designed to create one single value that is the result of an action performed on all elements in an array.  It essentially 'reduces' the values of an array into one single value.
 
 #### Example: Find the sum of all of the numbers in an array
 
-```javascript
+```js
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 var sum = numbers.reduce(function add(previous, current) {
   return current + previous;
 });
 
-//=> 55
+// returns 55
 
 ```
 
@@ -428,14 +438,14 @@ var sum = numbers.reduce(function add(previous, current) {
 
 There is another way to call this function and specify an initial starting value.
 
-```javascript
+```js
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 var sum = numbers.reduce(function add(previous, current) {
   return current + previous;
 }, 100);
 
-//=> 155
+// returns 155
 ```
 
 In the above example, the first time the callback is called it receives `100` and `1`.
@@ -444,23 +454,11 @@ In the above example, the first time the callback is called it receives `100` an
 
 #### Check for Understanding: Test Scores
 
-<details>
-<summary>
 Roberto has been tracking his test scores over the semester. Use `reduce` to help you find his average test score.
 
-```javascript
+```js
 var scores = [85, 78, 92, 90, 98];
 ```
-</summary>
-
-```javascript
-var scores = [85, 78, 92, 90, 98];
-var total = scores.reduce(function(previous, current) {
-  return previous + current;
-});
-var average = total/(scores.length);
-```
-</details>
 
 #### Discussion: `forEach`
 
@@ -477,7 +475,7 @@ Let's think about `forEach` again. What's happening behind the scenes?
 
 Let's check:
 
-```javascript
+```js
 function print(item) {
   console.log(item);
 }
@@ -487,19 +485,20 @@ function print(item) {
 });
 ```
 
-<details>
-<summary>Given the above, how would you build a function that mimics `forEach` yourself? Call it `myForEach`.</summary>
+Given the code above, how would you build a function that mimics `forEach` yourself?
 
-```javascript
+<br><br><br>
+Here's one possibile solution:
+```js
 function myForEach(collection, callback) {
-  for(var i = 0; i < collection.length; i++) {
-    callback(collection[i]);
+  for(let item of collection) {
+    callback(item);
   }
 }
-// the below should have the same result as the above
+// the code below should have the same result as that above
 myForEach([0, 100, 200, 300], print)
 ```
-</details>
+
 
 ### Closing Thoughts
 
