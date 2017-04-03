@@ -134,7 +134,7 @@ function countClicks(event){
 Let's run this in the console.
 
 
-####Anonymous Functions: Review
+#### Anonymous Functions: Review
 
 Often, if a callback will only be used with one higher order function, the callback function definition is written inside the higher order function call.
 
@@ -150,6 +150,17 @@ element.addEventListener("click", function(event){
 
 In these cases, the callback often won't be given a name.  A function without a name is called an **anonymous function**.
 
+Here's an ES6 version using an arrow function:
+
+
+```js
+let element = document.querySelector("body");
+let counter = 0;
+element.addEventListener("click", (event) => {
+  counter += 1;
+  console.log("clicked " + counter + " times.");
+});
+```
 
 #### Independent Practice: `sort`
 
@@ -158,12 +169,12 @@ JavaScript's built-in `sort` method for arrays sorts number values (by the first
 ```js
 var arr = [1, 2, 125, 500];
 arr.sort();
-//=> [1, 125, 2, 500]
+// returns [1, 125, 2, 500]
 ```
 
 Checking the [documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort), you should notice there is an optional `compareFunction` parameter that can change the sort order rules. 
 
-Work in a snippet or in your console. Use JavaScript's `sort` function to sort the following objects by price, from lowest to highest:
+Use JavaScript's `sort` function to sort the following objects by price, from lowest to highest:
 
 ```js
 var items = [
