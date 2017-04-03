@@ -253,6 +253,7 @@ We can combine our knowledge of **callbacks** & **iteration** to write more *dec
 
 Be thinking about how we could extend this metaphor with each method we discuss here.
 
+<!-- 
 ### ES6 `Map`s and `Set`s
 
 It used to be fairly easy to iterate through arrays in JavaScript and fairly hard to iterate through Objects. Here's how you would loop through all the key-value pairs in an object in ES5:
@@ -275,6 +276,7 @@ ES6 introduced a few new kinds of **iterable** objects to join arrays as easy lo
 `Set`s store _unique_ items _in the order they were inserted_ and allow devs to loop through the entries with `forEach`. 
 
 
+-->
 
 ### [`forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/ForEach)
 
