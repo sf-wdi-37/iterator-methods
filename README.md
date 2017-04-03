@@ -308,7 +308,7 @@ Similar to `forEach()`, `map()` traverses an array. This method, however perform
 
 Often we want to do more than just perform an action, like console.log(), on every loop.  When we actually want to modify/manipulate our array, `map` is the go-to!
 
-####Example: Double every number
+#### Example: Double every number
 
 ```js
 var numbers = [1, 4, 9];
@@ -318,7 +318,7 @@ var doubles = numbers.map(function doubler(num) {
 // doubles is now [2, 8, 18]. numbers is still [1, 4, 9]
 ```
 
-####Example: Create array of pluralized fruit names
+#### Example: Create array of pluralized fruit names
 
 ```js
 pluralized_fruits = fruits.map(function pluralize(element) {
@@ -341,7 +341,7 @@ pluralized_fruits // MAP OUTPUT
 //    "Figs", "Guavas", "Huckleberries", "Ice plants", "Jackfruits"  ]
 ```
 
-####Example: Square each number
+#### Example: Square each number
 
 ```js
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
